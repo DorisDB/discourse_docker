@@ -88,6 +88,7 @@ run:
       cmd:
         - git reset --hard
         - git clean -f
+        - git remote set-url origin https://gitee.com/fariel/discourse.git
         - git remote set-branches --add origin master
         - git pull
         - git fetch origin $version
@@ -145,7 +146,9 @@ run:
       hook: web
       cmd:
         # ensure we are on latest bundler
+        - gem sources --add https://gems.ruby-china.com/ --remove https://rubygems.org/
         - gem update bundler
+        - bundle config mirror.https://rubygems.org https://gems.ruby-china.com
         - find $home ! -user discourse -exec chown discourse {} \+
 
   - exec:
